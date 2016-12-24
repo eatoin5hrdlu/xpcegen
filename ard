@@ -1,0 +1,5 @@
+iface(lagoon, ebutton,
+      [ int(temperature, t,  0, ro),
+	int(target_temperature, tt, 370, rw),
+	int(turbidity,          b,  ro) ]).
+
