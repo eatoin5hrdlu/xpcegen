@@ -1,0 +1,28 @@
+
+
+iface( lagoon, ebutton,
+      [ int(       temperature,  t, ro),
+	int(target_temperature, tt, rw),
+	int(              host, v1, rw),
+	int(          inducer1, v2, rw),
+	int(          inducer2, v3, rw),
+	int(          inducer3, v4, rw) ]).
+
+iface( cellstat, ebutton,
+      [ int(       temperature,  t, ro),
+	int(target_temperature, tt, rw),
+	int(         turbidity,  b, ro),
+	int(  target_turbidity, tb, rw),
+	int(        nutrient,    n, rw)	 ]).
+
+iface( supply, ebutton, [ int( volume,  v, rw)]).
+
+iface( sampler, ebutton, 
+       [int(    cycle,  c, rw),
+	int(  samples,  s, rw),
+	int(  lagoon1, d1, rw),
+	int(  lagoon2, d2, rw),
+	int(  lagoon3, d3, rw),
+	int(  lagoon4, d4, rw),
+	int( cellstat, d5, rw)  ]).
+

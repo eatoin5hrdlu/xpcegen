@@ -1,5 +1,7 @@
-iface(lagoon, ebutton,
-      [ int(temperature, t,  0, ro),
-	int(target_temperature, tt, 370, rw),
-	int(turbidity,          b,  ro) ]).
+iface( lagoon, button,
+      [ int(       temperature,  t, ro),
+	int(target_temperature, tt, rw),
+	int(         turbidity,  b, ro) ]).
+
+:- consult(iface).
 
