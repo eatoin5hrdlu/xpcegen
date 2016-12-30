@@ -1,7 +1,11 @@
+iface( cellstat, button,
+      [ int(       temperature,  t, ro, "Temperature"),
+	int(target_temperature, tt, rw, "Target Temperature"),
+	int(         turbidity,  b, ro, "Turbidity"),
+	int(  target_turbidity, tb, rw, "Target Turbidity")]).
+
 iface( lagoon, button,
-      [ int(       temperature,  t, ro),
-	int(target_temperature, tt, rw),
-	int(         turbidity,  b, ro) ]).
+      [ int(       temperature,  t, ro, "Temperature"),
+	int(target_temperature, tt, rw, "Target Temperature")]).
 
-:- consult(iface).
-
+(setq printer-name "LPT2")
