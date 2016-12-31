@@ -21,30 +21,31 @@
 term_expansion(iface(Type,PType,Vars), []) :-
     expand_vars(Vars, VNames, Declarations, Methods, []),
     flatten([ (:-style_check(-singleton)),
-	      (:- pce_begin_class(Type, PType)),
-	      Declarations,
-	      ( initialise(Self, Label:[name]) :->
-		"Initialise button and connect to device"::
-		send_super(Self, initialise(Label)),
-		send(Self, slot, myname, Label),
-		send_super(Self, slot, socket, @nil),
-		bt_device(Label, Mac),
-		send_super(Self, slot, mac, Mac),
-		send_super(Self, connect),
-		new(Code2, message(Self, show_conversation)),
-		send(Self, recogniser, click_gesture(right,'',single,Code2))),
-	      ( update(USelf) :->
-		"Push r/w, Get r/o values to/from Device"::
-		( get(USelf, slot, socket, @nil)
-		-> send(USelf,colour,colour(red)) % and no updates
-		;  send(USelf,colour,colour(darkgreen)),
-		   findall(X,(member(X,VNames),send(USelf,pull,X)),_Xs),
-		   findall(V,(retract(changed(USelf,V)),send(USelf,push,V)),_Vs)
-		),
-		get(USelf, myname, MyName),
-		format(user_error,'Updated ~s~n', MyName)),
-              Methods,
-	      (:- pce_end_class)], List),
+       (:- pce_begin_class(Type, PType)),
+       Declarations,
+       ( initialise(Self, Label:[name]) :->
+	 "Initialise button and connect to device"::
+	 send_super(Self, initialise(Label)),
+	 send(Self, slot, myname, Label),
+	 send_super(Self, slot, socket, @nil),
+	 bt_device(Label, Mac),
+	 send_super(Self, slot, mac, Mac),
+	 send_super(Self, connect),
+	 new(Code2, message(Self, show_conversation)),
+	 send(Self, recogniser,
+	      click_gesture(right,'',single,Code2))),
+       ( update(US) :->
+	 "Push r/w, Get r/o values to/from Device"::
+	 ( get(US, slot, socket, @nil)
+	 -> send(US,colour,colour(red)) % and no updates
+	 ;  send(US,colour,colour(darkgreen)),
+	    findall(X,(member(X,VNames),send(US,pull,X)),_X),
+	    findall(V,(retract(changed(US,V)),send(US,push,V)),_V)
+	 ),
+	 get(US, myname, MyName),
+	 format(user_error,'Updated ~s~n', MyName)),
+       Methods,
+       (:- pce_end_class)], List),
     tell(iface),
     maplist(format('~q.~n'),Terms),
     told,
